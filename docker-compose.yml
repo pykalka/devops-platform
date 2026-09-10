@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: devops-platform-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: devops_db
+      POSTGRES_USER: devops_user
+      POSTGRES_PASSWORD: devops_password
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
