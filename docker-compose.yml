@@ -15,5 +15,19 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  backend:
+    image: devops-platform:local
+    container_name: devops-platform-backend
+    restart: unless-stopped
+
+    environment:
+      DATABASE_URL: postgresql://devops_user:devops_password@postgres:5432/devops_db
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - postgres
+
 volumes:
   postgres_data:
