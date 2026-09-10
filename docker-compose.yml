@@ -5,9 +5,9 @@ services:
     restart: unless-stopped
 
     environment:
-      POSTGRES_DB: devops_db
-      POSTGRES_USER: devops_user
-      POSTGRES_PASSWORD: devops_password
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     ports:
       - "5432:5432"
@@ -16,12 +16,14 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
+    build:
+      context: .
     image: devops-platform:local
     container_name: devops-platform-backend
     restart: unless-stopped
 
     environment:
-      DATABASE_URL: postgresql://devops_user:devops_password@postgres:5432/devops_db
+      DATABASE_URL: ${DATABASE_URL}
 
     ports:
       - "8000:8000"
