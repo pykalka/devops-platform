@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: devops-platform
+spec:
+  replicas: 1
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+
+  selector:
+    matchLabels:
+      app: backend
+
+  template:
+    metadata:
+      labels:
+        app: backend
+
+    spec:
+      containers:
+        - name: backend
+          image: devops-platform:k8s-v6
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 8000
+
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: devops-platform-config
+                  key: POSTGRES_DB
+
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: devops-platform-config
+                  key: POSTGRES_HOST
+
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: devops-platform-config
+                  key: POSTGRES_PORT
+
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: devops-platform-secret
+                  key: POSTGRES_USER
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: devops-platform-secret
+                  key: POSTGRES_PASSWORD
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 6
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi

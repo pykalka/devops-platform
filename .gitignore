@@ -4,7 +4,13 @@ __pycache__/
 .pytest_cache/
 .env
 .env.*
+
+# Postgres secret
 !.env.example
+
 .idea/
 .vscode/
 .DS_Store
+
+# Kubernetes secret
+k8s/secret.yaml

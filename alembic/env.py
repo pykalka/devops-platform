@@ -61,10 +61,19 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    database_url = os.getenv(
-        "DATABASE_URL",
-        "postgresql://devops_user:devops_password@localhost:5432/devops_db",
-    )
+    database_url = os.getenv("DATABASE_URL")
+
+    if not database_url:
+        postgres_user = os.getenv("POSTGRES_USER", "devops_user")
+        postgres_password = os.getenv("POSTGRES_PASSWORD", "devops_password")
+        postgres_host = os.getenv("POSTGRES_HOST", "localhost")
+        postgres_port = os.getenv("POSTGRES_PORT", "5432")
+        postgres_db = os.getenv("POSTGRES_DB", "devops_db")
+
+        database_url = (
+            f"postgresql://{postgres_user}:{postgres_password}"
+            f"@{postgres_host}:{postgres_port}/{postgres_db}"
+        )
 
     connectable = engine_from_config(
         {
