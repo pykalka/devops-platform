@@ -40,10 +40,10 @@ The project is designed as a local Kubernetes environment using Minikube.
                          ┌─────────────────┐
                          │ GitHub Actions  │
                          │                 │
-                         │  pytest        │
-                         │  Docker build  │
-                         │  Docker push   │
-                         │  K8s deploy    │
+                         │  pytest         │
+                         │  Docker build   │
+                         │  Docker push    │
+                         │  K8s deploy     │
                          └────────┬────────┘
                                   │
                                   ▼
@@ -54,8 +54,8 @@ The project is designed as a local Kubernetes environment using Minikube.
                                   │
                                   ▼
                   ┌────────────────────────────┐
-                  │        Kubernetes         │
-                  │       devops-platform     │
+                  │        Kubernetes          │
+                  │       devops-platform      │
                   │                            │
                   │  ┌──────────────────────┐  │
                   │  │    FastAPI Backend   │  │
