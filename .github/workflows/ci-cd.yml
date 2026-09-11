@@ -89,6 +89,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
+      - name: Set image tag
+        run: |
+          sed -i "s/IMAGE_TAG/${{ github.sha }}/g" k8s/backend.yaml
+
       - name: Apply Kubernetes manifests
         run: |
           kubectl apply -f k8s/namespace.yaml

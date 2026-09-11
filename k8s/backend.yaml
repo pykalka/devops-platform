@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/pykalka/devops-platform:latest
+          image: ghcr.io/pykalka/devops-platform:IMAGE_TAG
           imagePullPolicy: Always
 
           ports:
