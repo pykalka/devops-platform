@@ -24,8 +24,8 @@ spec:
     spec:
       containers:
         - name: backend
-          image: devops-platform:k8s-v6
-          imagePullPolicy: IfNotPresent
+          image: image: ghcr.io/pykalka/devops-platform:latest
+          imagePullPolicy: Always
 
           ports:
             - containerPort: 8000

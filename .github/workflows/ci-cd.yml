@@ -97,3 +97,31 @@ jobs:
           echo "Minikube:"
           minikube version
 
+deploy:
+    name: Deploy to Kubernetes
+    runs-on: self-hosted
+    needs: build-and-push
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Apply Kubernetes manifests
+        run: |
+          kubectl apply -f k8s/namespace.yaml
+          kubectl apply -f k8s/configmap.yaml
+          kubectl apply -f k8s/postgres-service.yaml
+          kubectl apply -f k8s/postgres.yaml
+          kubectl apply -f k8s/backend-service.yaml
+          kubectl apply -f k8s/backend.yaml
+
+      - name: Wait for backend rollout
+        run: |
+          kubectl rollout status deployment/backend \
+            -n devops-platform \
+            --timeout=120s
+
+      - name: Check deployment
+        run: |
+          kubectl get pods -n devops-platform
+          kubectl get services -n devops-platform
