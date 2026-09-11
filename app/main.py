@@ -1,5 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
+from prometheus_fastapi_instrumentator import Instrumentator
 
 from app.database import get_db
 from app.models import Task
@@ -7,6 +8,8 @@ from app.schemas import TaskCreate, TaskResponse, TaskUpdate
 
 
 app = FastAPI(title="DevOps Platform")
+
+Instrumentator().instrument(app).expose(app)
 
 
 tasks: list[Task] = []

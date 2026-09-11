@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "devops-platform-backend"
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+        - "backend.devops-platform.svc.cluster.local:8000"
