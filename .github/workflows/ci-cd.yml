@@ -79,3 +79,21 @@ jobs:
         run: |
           docker push ghcr.io/${{ github.repository_owner }}/devops-platform:${{ github.sha }}
           docker push ghcr.io/${{ github.repository_owner }}/devops-platform:latest
+
+  self-hosted-test:
+    name: Test self-hosted runner
+    runs-on: self-hosted
+
+    steps:
+      - name: Show environment
+        run: |
+          echo "Runner: $RUNNER_NAME"
+          echo "User: $(whoami)"
+          echo "Hostname: $(hostname)"
+          echo "Docker:"
+          docker --version
+          echo "Kubectl:"
+          kubectl version --client
+          echo "Minikube:"
+          minikube version
+
