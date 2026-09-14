@@ -119,6 +119,8 @@ The project is designed as a local Kubernetes environment using Minikube.
 - Prometheus FastAPI Instrumentator
 
 ## Project Structure
+
+```text
 devops-platform/
 ├── app/
 │   ├── __init__.py
@@ -167,6 +169,8 @@ devops-platform/
 ├── entrypoint.sh
 ├── requirements.txt
 └── README.md
+```
+
 ## Application API
 
 The application provides the following endpoints:
